@@ -70,8 +70,8 @@ export function useInView<T extends HTMLElement>() {
     const el = ref.current;
     if (!el || seen) return;
     const io = new IntersectionObserver(
-      ([e]) => {
-        if (e.isIntersecting) setSeen(true);
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) setSeen(true);
       },
       { threshold: 0.3 },
     );
