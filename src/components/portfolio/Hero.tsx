@@ -81,7 +81,7 @@ export function Hero() {
               </pre>
             </TerminalWindow>
 
-            <div className="mt-5 flex items-center gap-4 lg:absolute lg:-bottom-14 lg:-left-8 lg:mt-0 lg:rounded-xl lg:border lg:border-border lg:bg-card lg:p-3 lg:shadow-sm">
+            <div className="mt-5 flex items-center gap-4 rounded-xl border border-border bg-card p-3 shadow-sm">
               <img
                 src={portrait}
                 alt="Portrait of Pranay Karakoti"
