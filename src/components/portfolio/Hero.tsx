@@ -87,7 +87,7 @@ export function Hero() {
                 alt="Portrait of Pranay Karakoti"
                 width={816}
                 height={816}
-                className="size-16 rounded-full border border-border object-cover md:size-20"
+                className="size-20 rounded-full border border-border object-cover md:size-24"
               />
               <div className="min-w-0">
                 <p className="font-mono text-sm">Pranay Karakoti</p>
