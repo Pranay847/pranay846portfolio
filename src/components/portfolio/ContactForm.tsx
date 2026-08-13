@@ -36,8 +36,17 @@ export function ContactForm() {
     message: "",
   });
   const [errors, setErrors] = useState<Partial<Record<Field, string>>>({});
+  const [sending, setSending] = useState(false);
+  const [sent, setSent] = useState(false);
 
-  const onSubmit = (e: React.FormEvent) => {
+  const mailtoFallback = (d: z.infer<typeof schema>) => {
+    const body = `${d.message}\n\n—\n${d.name}\n${d.email}`;
+    window.location.href = `mailto:${TO_EMAIL}?subject=${encodeURIComponent(
+      d.subject,
+    )}&body=${encodeURIComponent(body)}`;
+  };
+
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const parsed = schema.safeParse(values);
     if (!parsed.success) {
@@ -47,11 +56,36 @@ export function ContactForm() {
       return;
     }
     setErrors({});
-    const { name, email, subject, message } = parsed.data;
-    const body = `${message}\n\n—\n${name}\n${email}`;
-    window.location.href = `mailto:pranay846@outlook.com?subject=${encodeURIComponent(
-      subject,
-    )}&body=${encodeURIComponent(body)}`;
+
+    if (!SERVICE_ID || !TEMPLATE_ID || !PUBLIC_KEY) {
+      mailtoFallback(parsed.data);
+      return;
+    }
+
+    setSending(true);
+    try {
+      await emailjs.send(
+        SERVICE_ID,
+        TEMPLATE_ID,
+        {
+          name: parsed.data.name,
+          email: parsed.data.email,
+          subject: parsed.data.subject,
+          message: parsed.data.message,
+          to_email: TO_EMAIL,
+        },
+        { publicKey: PUBLIC_KEY },
+      );
+      setValues({ name: "", email: "", subject: "", message: "" });
+      setSent(true);
+      toast.success("Message sent — I'll get back to you soon.");
+    } catch (err) {
+      console.error(err);
+      toast.error("Couldn't send the message. Opening your email client instead.");
+      mailtoFallback(parsed.data);
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
