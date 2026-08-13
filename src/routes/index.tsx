@@ -6,6 +6,7 @@ import { Hero } from "@/components/portfolio/Hero";
 import { Projects } from "@/components/portfolio/Projects";
 import { Skills } from "@/components/portfolio/Skills";
 import { Flow, PipelineCurve } from "@/components/portfolio/Diagram";
+import { ContactForm } from "@/components/portfolio/ContactForm";
 import { Section, Tag, TerminalWindow } from "@/components/portfolio/primitives";
 
 const TITLE = "Pranay Karakoti — Backend & AI Infrastructure Engineer";
