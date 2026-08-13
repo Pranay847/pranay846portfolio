@@ -6,6 +6,7 @@ import { Hero } from "@/components/portfolio/Hero";
 import { Projects } from "@/components/portfolio/Projects";
 import { Skills } from "@/components/portfolio/Skills";
 import { Flow, PipelineCurve } from "@/components/portfolio/Diagram";
+import { ContactForm } from "@/components/portfolio/ContactForm";
 import { Section, Tag, TerminalWindow } from "@/components/portfolio/primitives";
 
 const TITLE = "Pranay Karakoti — Backend & AI Infrastructure Engineer";
@@ -234,31 +235,8 @@ function Index() {
               </dl>
             </div>
 
-            <TerminalWindow title="contact.json">
-              <pre className="font-mono text-[12.5px] leading-6 text-terminal-foreground">
-                <span className="text-terminal-muted">{"{"}</span>
-                <div className="pl-4">
-                  <div>
-                    <span className="text-syntax-key">&quot;email&quot;</span>
-                    <span className="text-terminal-muted">: </span>
-                    <span className="text-syntax-string">&quot;pranay846@outlook.com&quot;</span>
-                    <span className="text-terminal-muted">,</span>
-                  </div>
-                  <div>
-                    <span className="text-syntax-key">&quot;location&quot;</span>
-                    <span className="text-terminal-muted">: </span>
-                    <span className="text-syntax-string">&quot;Chicago, IL&quot;</span>
-                    <span className="text-terminal-muted">,</span>
-                  </div>
-                  <div>
-                    <span className="text-syntax-key">&quot;availability&quot;</span>
-                    <span className="text-terminal-muted">: </span>
-                    <span className="text-syntax-string">&quot;2027 new grad roles&quot;</span>
-                  </div>
-                </div>
-                <span className="text-terminal-muted">{"}"}</span>
-              </pre>
-            </TerminalWindow>
+            <ContactForm />
+
           </div>
         </Section>
       </main>
