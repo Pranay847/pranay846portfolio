@@ -12,10 +12,10 @@ const schema = z.object({
 type Field = keyof z.infer<typeof schema>;
 
 const fields: { id: Field; label: string; type: "input" | "textarea"; placeholder: string }[] = [
-  { id: "name", label: "Name", type: "input", placeholder: "Ada Lovelace" },
-  { id: "email", label: "Email", type: "input", placeholder: "you@company.com" },
-  { id: "subject", label: "Subject", type: "input", placeholder: "Backend / infra role" },
-  { id: "message", label: "Message", type: "textarea", placeholder: "What are you building?" },
+  { id: "name", label: "Name", type: "input", placeholder: "John Doe" },
+  { id: "email", label: "Email", type: "input", placeholder: "you@email.com" },
+  { id: "subject", label: "Subject", type: "input", placeholder: "" },
+  { id: "message", label: "Message", type: "textarea", placeholder: "" },
 ];
 
 const inputCls =
