@@ -1,6 +1,13 @@
 import { useState } from "react";
-import { Send } from "lucide-react";
+import { Send, Loader2 } from "lucide-react";
 import { z } from "zod";
+import emailjs from "@emailjs/browser";
+import { toast } from "sonner";
+
+const SERVICE_ID = import.meta.env['VITE_EMAILJS_SERVICE_ID'] as string | undefined;
+const TEMPLATE_ID = import.meta.env['VITE_EMAILJS_TEMPLATE_ID'] as string | undefined;
+const PUBLIC_KEY = import.meta.env['VITE_EMAILJS_PUBLIC_KEY'] as string | undefined;
+const TO_EMAIL = "pranay846@outlook.com";
 
 const schema = z.object({
   name: z.string().trim().nonempty("Name is required").max(100, "Name is too long"),
