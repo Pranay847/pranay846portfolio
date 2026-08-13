@@ -81,16 +81,16 @@ export function Hero() {
               </pre>
             </TerminalWindow>
 
-            <div className="mt-5 flex items-center gap-4 rounded-xl border border-border bg-card p-3 shadow-sm">
+            <div className="mt-5 flex items-center gap-5 rounded-xl border border-border bg-card p-4 shadow-sm md:gap-6 md:p-5">
               <img
                 src={portrait}
                 alt="Portrait of Pranay Karakoti"
                 width={816}
                 height={816}
-                className="size-20 rounded-full border border-border object-cover md:size-24"
+                className="size-32 rounded-full border border-border object-cover md:size-48"
               />
               <div className="min-w-0">
-                <p className="font-mono text-sm">Pranay Karakoti</p>
+                <p className="font-mono text-sm md:text-base">Pranay Karakoti</p>
                 <p className="label-mono mt-1 normal-case">
                   Back-End AI Engineering Intern @ FlyRank AI
                 </p>
