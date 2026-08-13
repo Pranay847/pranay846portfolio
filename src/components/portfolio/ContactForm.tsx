@@ -135,12 +135,21 @@ export function ContactForm() {
 
       <button
         type="submit"
-        className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-md bg-primary px-4 py-3 font-mono text-xs text-primary-foreground transition-opacity hover:opacity-90"
+        disabled={sending}
+        className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-md bg-primary px-4 py-3 font-mono text-xs text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-60"
       >
-        <Send className="size-4" aria-hidden="true" /> Send Message
+        {sending ? (
+          <>
+            <Loader2 className="size-4 animate-spin" aria-hidden="true" /> Sending...
+          </>
+        ) : (
+          <>
+            <Send className="size-4" aria-hidden="true" /> Send Message
+          </>
+        )}
       </button>
-      <p className="mt-3 font-mono text-[11px] text-muted-foreground">
-        Opens your email client with the message pre-filled.
+      <p className="mt-3 font-mono text-[11px] text-muted-foreground" aria-live="polite">
+        {sent ? "Message sent — thanks for reaching out." : "Sent straight to my inbox."}
       </p>
     </form>
   );
