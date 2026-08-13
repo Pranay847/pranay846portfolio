@@ -1,6 +1,13 @@
 import { useState } from "react";
-import { Send } from "lucide-react";
+import { Send, Loader2 } from "lucide-react";
 import { z } from "zod";
+import emailjs from "@emailjs/browser";
+import { toast } from "sonner";
+
+const SERVICE_ID = import.meta.env['VITE_EMAILJS_SERVICE_ID'] as string | undefined;
+const TEMPLATE_ID = import.meta.env['VITE_EMAILJS_TEMPLATE_ID'] as string | undefined;
+const PUBLIC_KEY = import.meta.env['VITE_EMAILJS_PUBLIC_KEY'] as string | undefined;
+const TO_EMAIL = "pranay846@outlook.com";
 
 const schema = z.object({
   name: z.string().trim().nonempty("Name is required").max(100, "Name is too long"),
@@ -29,8 +36,17 @@ export function ContactForm() {
     message: "",
   });
   const [errors, setErrors] = useState<Partial<Record<Field, string>>>({});
+  const [sending, setSending] = useState(false);
+  const [sent, setSent] = useState(false);
 
-  const onSubmit = (e: React.FormEvent) => {
+  const mailtoFallback = (d: z.infer<typeof schema>) => {
+    const body = `${d.message}\n\n—\n${d.name}\n${d.email}`;
+    window.location.href = `mailto:${TO_EMAIL}?subject=${encodeURIComponent(
+      d.subject,
+    )}&body=${encodeURIComponent(body)}`;
+  };
+
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const parsed = schema.safeParse(values);
     if (!parsed.success) {
@@ -40,11 +56,36 @@ export function ContactForm() {
       return;
     }
     setErrors({});
-    const { name, email, subject, message } = parsed.data;
-    const body = `${message}\n\n—\n${name}\n${email}`;
-    window.location.href = `mailto:pranay846@outlook.com?subject=${encodeURIComponent(
-      subject,
-    )}&body=${encodeURIComponent(body)}`;
+
+    if (!SERVICE_ID || !TEMPLATE_ID || !PUBLIC_KEY) {
+      mailtoFallback(parsed.data);
+      return;
+    }
+
+    setSending(true);
+    try {
+      await emailjs.send(
+        SERVICE_ID,
+        TEMPLATE_ID,
+        {
+          name: parsed.data.name,
+          email: parsed.data.email,
+          subject: parsed.data.subject,
+          message: parsed.data.message,
+          to_email: TO_EMAIL,
+        },
+        { publicKey: PUBLIC_KEY },
+      );
+      setValues({ name: "", email: "", subject: "", message: "" });
+      setSent(true);
+      toast.success("Message sent — I'll get back to you soon.");
+    } catch (err) {
+      console.error(err);
+      toast.error("Couldn't send the message. Opening your email client instead.");
+      mailtoFallback(parsed.data);
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -94,12 +135,21 @@ export function ContactForm() {
 
       <button
         type="submit"
-        className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-md bg-primary px-4 py-3 font-mono text-xs text-primary-foreground transition-opacity hover:opacity-90"
+        disabled={sending}
+        className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-md bg-primary px-4 py-3 font-mono text-xs text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-60"
       >
-        <Send className="size-4" aria-hidden="true" /> Send Message
+        {sending ? (
+          <>
+            <Loader2 className="size-4 animate-spin" aria-hidden="true" /> Sending...
+          </>
+        ) : (
+          <>
+            <Send className="size-4" aria-hidden="true" /> Send Message
+          </>
+        )}
       </button>
-      <p className="mt-3 font-mono text-[11px] text-muted-foreground">
-        Opens your email client with the message pre-filled.
+      <p className="mt-3 font-mono text-[11px] text-muted-foreground" aria-live="polite">
+        {sent ? "Message sent — thanks for reaching out." : "Sent straight to my inbox."}
       </p>
     </form>
   );
