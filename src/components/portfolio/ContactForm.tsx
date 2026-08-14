@@ -4,9 +4,9 @@ import { z } from "zod";
 import emailjs from "@emailjs/browser";
 import { toast } from "sonner";
 
-const SERVICE_ID = import.meta.env['VITE_EMAILJS_SERVICE_ID'] as string | undefined;
-const TEMPLATE_ID = import.meta.env['VITE_EMAILJS_TEMPLATE_ID'] as string | undefined;
-const PUBLIC_KEY = import.meta.env['VITE_EMAILJS_PUBLIC_KEY'] as string | undefined;
+const SERVICE_ID = "service_m8yeoy8";
+const TEMPLATE_ID = "template_emttzij";
+const PUBLIC_KEY = "WmBrG7faQhjrmxJl1";
 const TO_EMAIL = "pranay846@outlook.com";
 
 const schema = z.object({
