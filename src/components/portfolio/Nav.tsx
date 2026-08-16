@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, FileText } from "lucide-react";
 import { cn } from "@/lib/utils";
+import resumeAsset from "@/assets/resume.pdf.asset.json";
+
 
 const links = [
   { n: "01", id: "home", label: "Home" },
