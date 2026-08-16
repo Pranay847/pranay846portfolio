@@ -53,11 +53,21 @@ export function Nav() {
         </ul>
 
         <div className="col-start-2 flex shrink-0 items-center gap-3 lg:col-start-3">
-          <span className="hidden items-center gap-2 rounded-full border border-border bg-secondary px-3 py-1.5 font-mono text-[10px] tracking-[0.1em] text-muted-foreground sm:inline-flex">
+          <span className="hidden items-center gap-2 rounded-full border border-border bg-secondary px-3 py-1.5 font-mono text-[10px] tracking-[0.1em] text-muted-foreground xl:inline-flex">
             <span className="size-1.5 rounded-full bg-term-green" aria-hidden="true" />
             OPEN TO 2027 NEW GRAD ROLES
           </span>
+          <a
+            href={resumeAsset.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 rounded-md border border-foreground bg-foreground px-3 py-1.5 font-mono text-[11px] tracking-[0.06em] text-background transition-opacity hover:opacity-85"
+          >
+            <FileText className="size-3.5" aria-hidden="true" />
+            RESUME
+          </a>
           <button
+
             type="button"
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
