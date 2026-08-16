@@ -59,9 +59,8 @@ export function Nav() {
           </span>
           <a
             href={resumeAsset.url}
-            download="PranayKarakoti-Resume.pdf"
+            target="_blank"
             rel="noopener noreferrer"
-
             className="inline-flex items-center gap-1.5 rounded-md border border-foreground bg-foreground px-3 py-1.5 font-mono text-[11px] tracking-[0.06em] text-background transition-opacity hover:opacity-85"
           >
             <FileText className="size-3.5" aria-hidden="true" />
