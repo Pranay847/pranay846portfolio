@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Menu, X, FileText } from "lucide-react";
 import { cn } from "@/lib/utils";
-import resumeAsset from "@/assets/resume.pdf.asset.json";
 
+const RESUME_URL = "/PranayKarakoti-Resume.pdf";
 
 const links = [
   { n: "01", id: "home", label: "Home" },
@@ -58,7 +58,7 @@ export function Nav() {
             OPEN TO 2027 NEW GRAD ROLES
           </span>
           <a
-            href={resumeAsset.url}
+            href={RESUME_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 rounded-md border border-foreground bg-foreground px-3 py-1.5 font-mono text-[11px] tracking-[0.06em] text-background transition-opacity hover:opacity-85"
@@ -67,7 +67,6 @@ export function Nav() {
             RESUME
           </a>
           <button
-
             type="button"
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
@@ -92,6 +91,17 @@ export function Nav() {
               </a>
             </li>
           ))}
+          <li>
+            <a
+              href={RESUME_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setOpen(false)}
+              className="block rounded-md px-2 py-2 font-mono text-sm text-muted-foreground hover:bg-secondary hover:text-foreground"
+            >
+              <span className="text-accent/70">07</span> / Resume
+            </a>
+          </li>
         </ul>
       )}
     </header>
