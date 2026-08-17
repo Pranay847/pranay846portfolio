@@ -14,12 +14,14 @@ type Project = {
   metrics: [string, string][];
   body: string;
   note?: string;
+  repo?: string;
 };
 
 const projects: Project[] = [
   {
     id: "01",
     name: "microvllm",
+    repo: "microvllm",
     tagline: "A miniature LLM inference server in C++20 with production-style serving techniques.",
     dots: true,
     platform: "Linux / macOS",
@@ -52,6 +54,7 @@ const projects: Project[] = [
   {
     id: "02",
     name: "Chronos",
+    repo: "chronos-scheduler",
     tagline: "Leaderless distributed job and webhook scheduler on Java 21, Spring Boot, MongoDB.",
     dots: true,
     visual: (
@@ -73,6 +76,7 @@ const projects: Project[] = [
   {
     id: "03",
     name: "M.A.C.E.",
+    repo: "legacy_refactoring_agent",
     tagline:
       "Monolith Analysis and Clustering Engine — an agentic tool that proposes service boundaries.",
     visual: (
@@ -102,6 +106,7 @@ const projects: Project[] = [
   {
     id: "04",
     name: "Fraud Detection on Imbalanced Data",
+    repo: "fraud-anomaly-detector",
     tagline: "0.172% positive rate — a project about evaluation methodology, not accuracy.",
     visual: <PrCurve />,
     tech: ["Python", "XGBoost", "PyTorch", "Pandas"],
@@ -115,6 +120,7 @@ const projects: Project[] = [
   {
     id: "05",
     name: "Generative AI Stock Portfolio Analyzer",
+    repo: "AI-Stock-Portfolio-Analyzer",
     tagline: "Signal model plus retrieval-augmented context behind a Streamlit interface.",
     visual: (
       <Flow
@@ -156,6 +162,7 @@ const projects: Project[] = [
   {
     id: "07",
     name: "Generative Image Editing Tool",
+    repo: "Generative-Image-Editing-Tool",
     tagline: "Stable Diffusion editing with 17 natural-language transformation types.",
     visual: (
       <Flow
@@ -169,6 +176,7 @@ const projects: Project[] = [
   {
     id: "08",
     name: "JobTracker",
+    repo: "JobTracker",
     tagline: "Full-stack application tracker built because the spreadsheet stopped working.",
     visual: <Flow nodes={["React / Vite", "Express", "SQLite"]} />,
     tech: ["React", "Vite", "Express", "SQLite", "JWT", "bcrypt"],
@@ -233,16 +241,18 @@ export function Projects() {
               ))}
             </div>
 
-            <a
-              href="https://github.com/Pranay847"
-              target="_blank"
-              rel="noreferrer noopener"
-              className="mt-6 inline-flex items-center gap-1.5 self-start font-mono text-xs text-accent hover:underline"
-            >
-              github.com/Pranay847 — {p.name}
-              <ArrowUpRight className="size-3.5" aria-hidden="true" />
-              <span className="sr-only">(opens in a new tab)</span>
-            </a>
+            {p.repo && (
+              <a
+                href={`https://github.com/Pranay847/${p.repo}`}
+                target="_blank"
+                rel="noreferrer noopener"
+                className="mt-6 inline-flex items-center gap-1.5 self-start font-mono text-xs text-accent hover:underline"
+              >
+                github.com/Pranay847/{p.repo}
+                <ArrowUpRight className="size-3.5" aria-hidden="true" />
+                <span className="sr-only">(opens in a new tab)</span>
+              </a>
+            )}
           </article>
         ))}
       </div>
