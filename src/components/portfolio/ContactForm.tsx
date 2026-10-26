@@ -18,11 +18,18 @@ const schema = z.object({
 
 type Field = keyof z.infer<typeof schema>;
 
-const fields: { id: Field; label: string; type: "input" | "textarea"; placeholder: string }[] = [
-  { id: "name", label: "Name", type: "input", placeholder: "John Doe" },
-  { id: "email", label: "Email", type: "input", placeholder: "you@email.com" },
-  { id: "subject", label: "Subject", type: "input", placeholder: "" },
-  { id: "message", label: "Message", type: "textarea", placeholder: "" },
+// `max` mirrors the schema limits so the browser stops input at the same length validation enforces.
+const fields: {
+  id: Field;
+  label: string;
+  type: "input" | "textarea";
+  placeholder: string;
+  max: number;
+}[] = [
+  { id: "name", label: "Name", type: "input", placeholder: "John Doe", max: 100 },
+  { id: "email", label: "Email", type: "input", placeholder: "you@email.com", max: 255 },
+  { id: "subject", label: "Subject", type: "input", placeholder: "", max: 150 },
+  { id: "message", label: "Message", type: "textarea", placeholder: "", max: 2000 },
 ];
 
 const inputCls =
@@ -109,7 +116,9 @@ export function ContactForm() {
               <textarea
                 id={f.id}
                 rows={5}
-                maxLength={2000}
+                maxLength={f.max}
+                aria-invalid={!!errors[f.id]}
+                aria-describedby={errors[f.id] ? `${f.id}-error` : undefined}
                 placeholder={f.placeholder}
                 value={values[f.id]}
                 onChange={(e) => setValues((v) => ({ ...v, [f.id]: e.target.value }))}
@@ -119,7 +128,9 @@ export function ContactForm() {
               <input
                 id={f.id}
                 type={f.id === "email" ? "email" : "text"}
-                maxLength={255}
+                maxLength={f.max}
+                aria-invalid={!!errors[f.id]}
+                aria-describedby={errors[f.id] ? `${f.id}-error` : undefined}
                 placeholder={f.placeholder}
                 value={values[f.id]}
                 onChange={(e) => setValues((v) => ({ ...v, [f.id]: e.target.value }))}
@@ -127,7 +138,9 @@ export function ContactForm() {
               />
             )}
             {errors[f.id] && (
-              <p className="mt-1.5 font-mono text-[11px] text-term-red">{errors[f.id]}</p>
+              <p id={`${f.id}-error`} className="mt-1.5 font-mono text-[11px] text-term-red">
+                {errors[f.id]}
+              </p>
             )}
           </div>
         ))}
