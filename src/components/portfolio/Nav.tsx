@@ -24,6 +24,16 @@ export function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Let keyboard users dismiss the mobile menu with Escape.
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
   return (
     <header
       className={cn(
@@ -70,16 +80,24 @@ export function Nav() {
             type="button"
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
+            aria-controls="mobile-nav"
             aria-label={open ? "Close menu" : "Open menu"}
             className="rounded-md border border-border p-2 lg:hidden"
           >
-            {open ? <X className="size-4" /> : <Menu className="size-4" />}
+            {open ? (
+              <X className="size-4" aria-hidden="true" />
+            ) : (
+              <Menu className="size-4" aria-hidden="true" />
+            )}
           </button>
         </div>
       </nav>
 
       {open && (
-        <ul className="mx-auto mt-3 grid w-full max-w-6xl gap-1 border-t border-border px-5 pt-3 lg:hidden">
+        <ul
+          id="mobile-nav"
+          className="mx-auto mt-3 grid w-full max-w-6xl gap-1 border-t border-border px-5 pt-3 lg:hidden"
+        >
           {links.map((l) => (
             <li key={l.id}>
               <a
